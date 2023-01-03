@@ -1,0 +1,23 @@
+{
+  "name": "labecommerce-backend",
+  "version": "1.0.0",
+  "description": "Projeto e-commerce backend",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "start":"clear && node index.js",
+    "jogo":"clear && node jogo.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jpbrixner/labecommerce-backend.git"
+  },
+  "keywords": [],
+  "author": "Joao Pedro Brixner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jpbrixner/labecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/Jpbrixner/labecommerce-backend#readme"
+}
