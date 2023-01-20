@@ -1,8 +1,8 @@
 import { purchases, products, users } from "./database";
 
-console.log(users)
-console.log(products)
-console.log(purchases)
+console.table(users)
+console.table(products)
+console.table(purchases)
 
 
 
