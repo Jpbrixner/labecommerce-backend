@@ -1,14 +1,16 @@
 -- Active: 1674786500299@@127.0.0.1@3306
 CREATE TABLE users (
-    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+     id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    createdAt TEXT DEFAULT(DATETIME('now', 'localtime')) NOT NULL
 );
 
-INSERT INTO users VALUES
-    ("u001", "johnny@gmail.com", "johny123"),
-    ("u002", "fulano@hotmail.com", "asd123"),
-    ("u003", "sebastian@outlook.com", "4324de");
+INSERT INTO users(id, name, email, password)VALUES
+    ("u001","Johnny", "johnny@gmail.com", "johny123"),
+    ("u002","Fulano", "fulano@hotmail.com", "asd123"),
+    ("u003","Sebastian","sebastian@outlook.com", "4324de");
 
 
 SELECT * FROM users;
@@ -18,16 +20,18 @@ CREATE TABLE products (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     name TEXT NOT NULL,
     price REAL NOT NULL,
+    description TEXT NOT NULL,
+    imageUrl TEXT NOT NULL,
     category TEXT NOT NULL
 );
 
 
 INSERT INTO products VALUES
-    ("p001", "tenis", 500, "Acessories"),
-    ("p002", "casaco", 200, "Acessories"),
-    ("p003", "celular", 1500, "Electronics"),
-    ("p004", "notebook", 4000, "Electronics"),
-    ("p005", "mouse", 150, "Electronics");
+    ("p001", "tenis", 500, "Ótimo para corrida.","https://imgnike-a.akamaihd.net/1920x1920/022104ID.jpg", "Acessories"),
+    ("p002", "casaco", 200, "Mantenha-se aquecido com estilo.","https://images-americanas.b2w.io/produtos/1329692233/imagens/blusa-de-frio-swag-casaco-moletom-jaqueta-diverse-estilos/1329692233_1_xlarge.jpg","Acessories"),
+    ("p003", "celular", 1500,"Melhor câmera do mercado","https://imgs.casasbahia.com.br/55033578/1xg.jpg?imwidth=500", "Electronics"),
+    ("p004", "notebook", 4000, "Perfeito para jogos.","https://m.media-amazon.com/images/I/81VNCWPxsVL._AC_SX450_.jpg", "Electronics"),
+    ("p005", "mouse", 150,"Leve e ergonômico","https://www.havan.com.br/media/catalog/product/cache/73a52df140c4d19dbec2b6c485ea6a50/m/o/mouse-gamer-g403-rgb-lightsync-12000dpi-logitech_266596.jpg", "Electronics");
 
 
 SELECT * FROM products;
@@ -77,20 +81,18 @@ SET name = "teclado",
 WHERE id = "p005";
 
 -- Get All Users
--- resultado ordenado pela coluna email em ordem crescente
+
 SELECT * FROM users
 ORDER BY email ASC;
 
 -- Get All Products versao 1
--- retorna o resultado ordenado pela coluna price em ordem crescente
--- limite o resultado em 20 iniciando pelo primeiro item
+
 SELECT * FROM products
 ORDER BY price ASC
 LIMIT 20;
 
 -- Get All Products versao 2
--- mocke um intervalo de preços, por exemplo entre 100.00 e 300.00
--- retorna os produtos com preços dentro do intervalo mockado em ordem crescente
+
 SELECT * FROM products
 WHERE price > 100 AND price < 500
 ORDER BY price ASC;
@@ -99,18 +101,18 @@ ORDER BY price ASC;
 
 CREATE TABLE purchases(
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
-    total_price REAL UNIQUE NOT NULL,
+    buyerId TEXT NOT NULL,
+    totalPrice REAL UNIQUE NOT NULL,
+    createdAt TEXT DEFAULT(DATETIME('now', 'localtime')) NOT NULL,
     paid INTEGER NOT NULL,
-    delivered_at TEXT,
-    buyer_id TEXT NOT NULL,
-    FOREIGN KEY (buyer_id) REFERENCES users(id)
+    FOREIGN KEY (buyerId) REFERENCES users(id)
 );
 
-INSERT INTO purchases VALUES 
-    ("c001", 500, 1, NULL, "u001"),
-    ("c002", 200, 1, NULL, "u001"),
-    ("c003", 100, 0, NULL, "u002"),
-    ("c004", 1500, 1, NULL, "u002");
+INSERT INTO purchases(id, buyerId, totalPrice, paid) VALUES 
+    ("c001", "u003", 500, 1),
+    ("c002", "u001", 4000, 1),
+    ("c003", "u002", 1500, 0),
+    ("c004", "u001", 150, 1);
 
 UPDATE purchases
 SET delivered_at = datetime('now')
