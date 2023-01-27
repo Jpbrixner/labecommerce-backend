@@ -31,3 +31,67 @@ INSERT INTO products VALUES
 
 
 SELECT * FROM products;
+
+
+-- Aprofundamento SQL
+
+
+-- Get All Users
+SELECT * FROM users;
+
+-- Get All Products
+SELECT * FROM products;
+
+-- Search Product by Name
+SELECT * FROM products
+WHERE name LIKE "Celular";
+
+-- Create User
+INSERT INTO users VALUES ("u004", "ciclano@gmail.com", "78945");
+
+-- Create Product
+INSERT INTO products VALUES ("p006", "monitor", 1200, "Electronics");
+
+-- Get Products by id
+SELECT * FROM products
+WHERE id = "p002";
+
+-- Delete User by id
+DELETE FROM users
+WHERE id = "u003";
+
+-- Delete Product by id
+DELETE FROM products
+WHERE id = "p006";
+
+-- Edit User by id
+UPDATE users
+SET email = "jose@gmail.com",
+    password = "45612"
+WHERE id = "u004";
+
+-- Edit Product by id
+UPDATE products
+SET name = "teclado",
+    price = 220
+WHERE id = "p005";
+
+-- Get All Users
+-- resultado ordenado pela coluna email em ordem crescente
+SELECT * FROM users
+ORDER BY email ASC;
+
+-- Get All Products versao 1
+-- retorna o resultado ordenado pela coluna price em ordem crescente
+-- limite o resultado em 20 iniciando pelo primeiro item
+SELECT * FROM products
+ORDER BY price ASC
+LIMIT 20;
+
+-- Get All Products versao 2
+-- mocke um intervalo de preços, por exemplo entre 100.00 e 300.00
+-- retorna os produtos com preços dentro do intervalo mockado em ordem crescente
+SELECT * FROM products
+WHERE price > 100 AND price < 500
+ORDER BY price ASC;
+
