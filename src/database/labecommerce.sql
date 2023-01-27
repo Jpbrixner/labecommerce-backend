@@ -95,3 +95,33 @@ SELECT * FROM products
 WHERE price > 100 AND price < 500
 ORDER BY price ASC;
 
+-- Relacoes SQL
+
+CREATE TABLE purchases(
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    total_price REAL UNIQUE NOT NULL,
+    paid INTEGER NOT NULL,
+    delivered_at TEXT,
+    buyer_id TEXT NOT NULL,
+    FOREIGN KEY (buyer_id) REFERENCES users(id)
+);
+
+INSERT INTO purchases VALUES 
+    ("c001", 500, 1, NULL, "u001"),
+    ("c002", 200, 1, NULL, "u001"),
+    ("c003", 100, 0, NULL, "u002"),
+    ("c004", 1500, 1, NULL, "u002");
+
+UPDATE purchases
+SET delivered_at = datetime('now')
+WHERE id = "c002";
+
+SELECT * FROM purchases;
+
+SELECT 
+    users.id AS userId,
+    users.email,
+    purchases.total_price
+FROM users
+INNER JOIN purchases
+ON purchases.buyer_id = users.id;
