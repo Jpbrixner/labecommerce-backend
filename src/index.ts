@@ -512,6 +512,32 @@ app.post("/purchases", async(req: Request, res: Response) => {
     }
 });
 
+app.delete("/purchases/:id", async (req: Request, res: Response) => {
+    try {
+      const purchaseId = req.params.id;
+  
+      const [purchases] = await db("purchases").where({ id: purchaseId})
+  
+      if (!purchases) {
+        res.status(400);
+        throw new Error("Compra não encontrado");
+      }
+  
+      await db("purchases_products").del().where({ purchase_id: purchaseId })
+      await db("purchases").del().where({ id:purchaseId})
+  
+      res.status(200).send("Produto apagado com sucesso");
+    } catch (error: any) {
+      console.log(error);
+  
+      if (res.statusCode === 200) {
+        res.status(500);
+      }
+  
+      res.send(error.message);
+    }
+  });
+
 app.listen(3003, () => {
   console.log("Servidor rodando!");
 });
